@@ -18,10 +18,19 @@ class PolicyIteration:
             # new_v = [0] * self.env.channel * self.env.time_gap_amount
             new_v=[[0] for channel in self.env.channel]
 
+            for time_gap in range(self.env.time_gap_amount):
+                for channel in range(self.env.channel):
+                    qsa_list = []  # 开始计算状态s下的所有Q(s,a)价值
+                    for action in range(self.env.change):
+                        qsa=0
+                        for res in self.env.P[time_gap][channel][action]:
+                            reward=res
 
-            for s in range(self.env.channel * self.env.time_gap_amount):
-                qsa_list = []  # 开始计算状态s下的所有Q(s,a)价值
-                for a in range(self.env.change):
+
+
+
+
+
                     qsa = 0
                     for res in self.env.P[s][a]:
                         p, next_state, r, done = res

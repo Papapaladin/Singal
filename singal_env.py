@@ -45,7 +45,8 @@ class SignalEachTimeGapEnv:
                     else:
                         reward=1
 
-                    P[time_gap][channel]=[(channel,change,reward)]
+                    P[time_gap][channel][change]=reward
+
         return P
 
     def compute(P, rewards, gamma, states_num):
