@@ -9,9 +9,10 @@ class SignalEachTimeGapEnv:
         self.channel=channel
         self.change = channel
         self.time_gap_amount=time_gap_amount
-        self.init_inter_p=[]
-        for time_gap in range(time_gap_amount):
-            self.init_inter_p.append( np.random.dirichlet(np.ones(channel), size=1)[0])
+        self.init_inter_p=[[]. append( np.random.dirichlet(np.ones(channel), size=1)[0]) for i in range(self.time_gap_amount)  ]
+        self.P=self.createP()
+        # for time_gap in range(time_gap_amount):
+        #     self.init_inter_p=self.init_inter_p.append( np.random.dirichlet(np.ones(channel), size=1)[0])
 
 
         # 初始化传输强度列表  J1,J2,J3 乱序
@@ -27,9 +28,7 @@ class SignalEachTimeGapEnv:
         P=[[[] for i in range(self.channel)] for j in range(self.time_gap_amount)]
 
         # channel 种动作 保持原信道不变 也是一种动作
-
         for time_gap in range(self.time_gap_amount):
-
             time_gap_interference = self.init_inter_p[time_gap]
             first_interference_p = max(time_gap_interference)
             first_interference_index = time_gap_interference.index(first_interference_p)
@@ -44,8 +43,8 @@ class SignalEachTimeGapEnv:
                         reward=0
                     else:
                         reward=1
-
-                    P[time_gap][channel][change]=reward
+                    next_state=change
+                    P[time_gap][channel][change]=[(1,next_state,reward)]
 
         return P
 
